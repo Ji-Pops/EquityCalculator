@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquityCalculator", "EquityCalculator\EquityCalculator.csproj", "{A4782438-29F7-4900-8D13-E17E43ACC3BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A4782438-29F7-4900-8D13-E17E43ACC3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4782438-29F7-4900-8D13-E17E43ACC3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4782438-29F7-4900-8D13-E17E43ACC3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4782438-29F7-4900-8D13-E17E43ACC3BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73298719-597D-4771-8252-040EB9B0C80A}
+	EndGlobalSection
+EndGlobal
