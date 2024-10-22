@@ -1,0 +1,46 @@
+1. SELECT STATEMENT
+SELECT 
+    Ct.CustomerNo, 
+    Ct.LastName, 
+    Ct.FirstName, 
+    Ct.MiddleName, 
+    Ct.UnitID,
+    Dt.EquityTerm, 
+    Dt.EquityAmount, 
+    Dt.MATerm, 
+    Dt.MAAmount, 
+    Dt.MIR, 
+    Dt.FIRE, 
+    Dt.LoanAmt, 
+    Dt.IntRate,
+    CASE 
+        WHEN It.Type = 'House & lot' THEN It.HousePrice
+        WHEN It.Type = 'Lot Only' THEN It.LotPrice
+        ELSE NULL
+    END AS SellingPrice
+FROM 
+    CustomerTbl Ct
+LEFT JOIN 
+    CustomerDtl Dt ON Ct.CustomerNo = Dt.CustomerNo
+LEFT JOIN 
+    InventoryTbl It ON Ct.UnitID = It.UnitID;
+
+
+
+2. UPDATE STATEMENT
+UPDATE CustomerDtl
+SET IntRate = 21
+WHERE CustomerNo = 739662 AND IntRate = 10;
+
+
+
+3. DELETE STATEMENT
+DELETE FROM CustomerDtl
+WHERE CustomerNo IN (
+    SELECT CustomerNo 
+    FROM CustomerTbl 
+    WHERE LastName = 'RIVERA' AND FirstName = 'MARJORIE' AND MiddleName = 'TRAMPE'
+);
+
+DELETE FROM CustomerTbl
+WHERE LastName = 'RIVERA' AND FirstName = 'MARJORIE' AND MiddleName = 'TRAMPE';
