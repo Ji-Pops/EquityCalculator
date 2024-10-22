@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Equity Calculator";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form id="equityForm">
+    <div class="form-group">
+        <label for="sellingPrice">Selling Price:</label>
+        <input type="number" class="form-control" id="sellingPrice" name="sellingPrice" required />
+    </div>
+
+    <div class="form-group">
+        <label for="reservationDate">Reservation Date:</label>
+        <input type="date" class="form-control" id="reservationDate" name="reservationDate" required />
+    </div>
+
+    <div class="form-group">
+        <label for="equityTerm">Term (Months):</label>
+        <input type="number" class="form-control" id="equityTerm" name="equityTerm" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Calculate</button>
+</form>
+
+<div id="result" class="mt-4">
+    <h2>Results</h2>
+    <div id="scheduleOutput"></div>
+</div>
+
+@section Scripts {
+<script>
+    document.getElementById("equityForm").onsubmit = async function (event) {
+        event.preventDefault();
+
+        const sellingPrice = document.getElementById("sellingPrice").value;
+        const reservationDate = document.getElementById("reservationDate").value;
+        const equityTerm = document.getElementById("equityTerm").value;
+
+        try {
+            const response = await fetch(`/api/EquityCalculator?sellingPrice=${sellingPrice}&reservationDate=${reservationDate}&equityTerm=${equityTerm}`);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+
+            let output = "<ul>";
+            data.monthlySchedules.forEach(schedule => {
+                const dueDateParts = schedule.header.duedate.split('/');
+                const dueDate = new Date(dueDateParts[2], dueDateParts[1] - 1, dueDateParts[0]);
+
+                const formattedDate = `${String(dueDate.getDate()).padStart(2, '0')}/${String(dueDate.getMonth() + 1).padStart(2, '0')}/${dueDate.getFullYear()}`;
+
+                output += `<li>Term: ${schedule.header.term}, Balance: ${schedule.header.balance}, Due Date: ${formattedDate}, Payment Amount: ${schedule.paymentInfo.amount}, Interest: ${schedule.paymentInfo.interest}, Insurance: ${schedule.paymentInfo.insurance}, Total: ${schedule.paymentInfo.total}</li>`;
+            });
+            output += "</ul>";
+
+            document.getElementById("scheduleOutput").innerHTML = output;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            document.getElementById("scheduleOutput").innerHTML = "An error occurred. Please try again.";
+        }
+    };
+</script>
+}
